@@ -90,7 +90,7 @@ extension KingfisherWrapper where Base: ImageView {
         }
         
         var options = KingfisherParsedOptionsInfo(KingfisherManager.shared.defaultOptions + (options ?? .empty))
-        if let urlString = source.url?.absoluteString, urlString.contains("/bill/") {
+        if let urlString = source.url?.absoluteString, urlString.contains("/bills/") {
             options = KingfisherParsedOptionsInfo(KingfisherManager.shared.defaultOptions + ([.fromMemoryCacheOrRefresh]))
         }
         
