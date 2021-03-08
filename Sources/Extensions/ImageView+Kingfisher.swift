@@ -89,13 +89,10 @@ extension KingfisherWrapper where Base: ImageView {
             return nil
         }
         
-        var options: KingfisherParsedOptionsInfo
+        var options = KingfisherParsedOptionsInfo(KingfisherManager.shared.defaultOptions + (options ?? .empty))
         if let urlString = source.url?.absoluteString, urlString.contains("/bill/") {
-            options = KingfisherParsedOptionsInfo(KingfisherManager.shared.defaultOptions + [.fromMemoryCacheOrRefresh] + (options ?? .empty))
-        } else {
-            options = KingfisherParsedOptionsInfo(KingfisherManager.shared.defaultOptions + (options ?? .empty))
+            options = KingfisherParsedOptionsInfo(KingfisherManager.shared.defaultOptions + ([.fromMemoryCacheOrRefresh]))
         }
-        
         
         let noImageOrPlaceholderSet = base.image == nil && self.placeholder == nil
         if !options.keepCurrentImageWhileLoading || noImageOrPlaceholderSet {
