@@ -88,8 +88,15 @@ extension KingfisherWrapper where Base: ImageView {
             completionHandler?(.failure(KingfisherError.imageSettingError(reason: .emptySource)))
             return nil
         }
-
-        var options = KingfisherParsedOptionsInfo(KingfisherManager.shared.defaultOptions + (options ?? .empty))
+        
+        var options: KingfisherParsedOptionsInfo
+        if let urlString = source.url?.absoluteString, urlString.contains("/bill/") {
+            options = KingfisherParsedOptionsInfo(KingfisherManager.shared.defaultOptions + [.fromMemoryCacheOrRefresh] + (options ?? .empty))
+        } else {
+            options = KingfisherParsedOptionsInfo(KingfisherManager.shared.defaultOptions + (options ?? .empty))
+        }
+        
+        
         let noImageOrPlaceholderSet = base.image == nil && self.placeholder == nil
         if !options.keepCurrentImageWhileLoading || noImageOrPlaceholderSet {
             // Always set placeholder while there is no image/placeholder yet.
